@@ -1,0 +1,21 @@
+/* src/components/HomePage.css */
+
+.company-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  .company {
+    text-align: center;
+    margin: 10px;
+    width: 30%;
+  }
+  
+  .company img {
+    width: 200%;
+    max-width: 250px; /* İstenilen genişlik */
+    height: auto;
+  }
+  
