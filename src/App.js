@@ -1,7 +1,3 @@
-
-
-// src/App.js
-
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
@@ -11,10 +7,9 @@ const App = () => {
   return (
     <Router>
       <Route path="/" exact component={HomePage} />
-      <Route path="/order-pizza" component={PizzaForm} />
+      <Route path="/pizza" component={PizzaForm} />
     </Router>
   );
 };
 
 export default App;
-

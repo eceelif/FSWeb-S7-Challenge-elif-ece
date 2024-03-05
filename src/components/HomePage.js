@@ -47,7 +47,7 @@ const HomePage = () => (
       </div>
     </div>
 
-    <Link to="/order-pizza" id="order-pizza">
+    <Link to="/pizza" id="pizza">
       <button>Add to Order</button>
     </Link>
   </div>

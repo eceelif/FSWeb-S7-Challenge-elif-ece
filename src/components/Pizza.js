@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import "./Form.css"; // Include the CSS file if needed
 
-const PizzaForm = ({ onFormSubmit }) => {
+const Pizza = ({ onFormSubmit }) => {
   const [customerInfo, setCustomerInfo] = useState({
     size: "",
     sauces: [],
@@ -125,7 +125,7 @@ const PizzaForm = ({ onFormSubmit }) => {
         />
       </label>
 
-      <button type="submit">Add to Order</button>
+      
     </form>
   );
 };
