@@ -1,62 +1,85 @@
-// src/components/PizzaForm.js
-
 import React, { useState } from "react";
-import Pizza from "./Pizza"
+import axios from "axios";
+import Pizza from "./Pizza";
+import "./Form.css";
 
 const PizzaForm = ({ onFormSubmit }) => {
-  const [name, setName] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [error, setError] = useState("");
-  const [pizzaSize, setPizzaSize] = useState("");
-  const [selectedSauces, setSelectedSauces] = useState([]);
-  const [selectedToppings, setSelectedToppings] = useState([]);
-  const [substitute, setSubstitute] = useState("");
-  const [specialInstructions, setSpecialInstructions] = useState("");
-  
-  
+  const [loading, setLoading] = useState(false);
+  const [pizzaDetails, setPizzaDetails] = useState({
+    size: "",
+    sauces: [],
+    toppings: [],
+    substitute: "",
+    special_instructions: "",
+  });
+
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    const newName = e.target.value;
+    setCustomerName(newName);
     setError("");
   };
 
+  const handlePizzaDetailsChange = (e) => {
+    const { name, value } = e.target;
+    setPizzaDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (name.length < 2) {
+    if (customerName.length < 2 || customerName.trim().length === 0) {
       setError("İsim en az 2 karakter olmalıdır");
     } else {
+      try {
+        setLoading(true);
+
+        const response = await axios.post("https://reqres.in/api/orders", {
+          customerName,
+          pizzaDetails,
+        });
+
+        console.log("Veritabanına gönderilen sipariş:", response.data);
+
+        // Pizza.js'ye bilgileri iletiliyor
         onFormSubmit({
-            name,
-            pizzaSize,
-            selectedSauces,
-            selectedToppings,
-            substitute,
-            specialInstructions,
-          });
+          customerName,
+          pizzaDetails,
+        });
+      } catch (error) {
+        console.error("Sipariş gönderme hatası:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
-    <form id="pizza-form" onSubmit={handleSubmit}>
+    <form id="pizza-form" onSubmit={handleFormSubmit}>
       {/* İsim */}
       <label>
         İsim:
         <input
           type="text"
           id="name-input"
-          value={name}
+          value={customerName}
           onChange={handleNameChange}
         />
       </label>
       <div style={{ color: "red" }}>{error}</div>
-      <label>
-        <Pizza />
-      </label>
 
-    
+      {/* Pizza Detayları */}
+      {/* Pizza.js'ye bilgileri iletiyoruz */}
+      <Pizza customerInfo={pizzaDetails} setPizzaDetails={setPizzaDetails} />
 
-      {/* Siparişi Tamamla Butonu */}
-      <button id="order-button" type="submit">Siparişlere Ekle</button>
+      {/* Siparişi Tamamla Butonu - Loading durumuna göre butonun durumunu kontrol edin */}
+      <button id="order-button" type="submit" disabled={loading}>
+        {loading ? "Sipariş Gönderiliyor..." : "Siparişlere Ekle"}
+      </button>
     </form>
   );
 };

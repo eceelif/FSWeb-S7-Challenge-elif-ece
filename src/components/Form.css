@@ -1,33 +1,94 @@
 /* Form.css */
 
 form {
-    max-width: 400px;
-    margin: auto;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  input,
-  select,
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-  
-  div {
-    margin-bottom: 10px;
-  }
-  
-  button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+  max-width: 400px;
+  margin: auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input,
+select,
+textarea {
+  width: calc(100% - 16px); /* Padding değeri çıkarıldı */
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box; /* Kutu modelini düzeltmek için ekledi */
+}
+
+div {
+  margin-bottom: 10px;
+}
+
+.sauces-container,
+.toppings-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sauces-container label,
+.toppings-container label {
+  width: 20%; /* İki sütunlu düzen için */
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sauces-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sauces-table td {
+  padding: 12px; /* Büyük kutular için biraz daha fazla padding */
+  border: 1px solid #ddd;
+}
+
+.sauces-table input[type="checkbox"] {
+  transform: scale(1.5); /* Checkbox'ları büyütme */
+  margin-right: 8px; /* Checkbox'lar arasında biraz boşluk bırakma */
+}
+
+.sauces-table label {
+  display: flex;
+  align-items: center;
+}
+/* Form.css */
+
+/* Diğer stillendirmeler */
+
+.toppings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.toppings-table td {
+  padding: 12px; /* Büyük kutular için biraz daha fazla padding */
+  border: 1px solid #ddd;
+}
+
+.toppings-table th {
+  padding: 12px;
+  border: 1px solid #ddd;
+  background-color: #f2f2f2; /* Başlık arkaplan rengi */
+}
+
+.toppings-table input[type="checkbox"] {
+  transform: scale(1.5); /* Checkbox'ları büyütme */
+  margin-right: 8px; /* Checkbox'lar arasında biraz boşluk bırakma */
+}
+
+.toppings-table label {
+  display: flex;
+  align-items: center;
+}

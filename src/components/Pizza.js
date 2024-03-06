@@ -1,21 +1,10 @@
-// src/components/PizzaForm.js
+import React from "react";
 
-import React, { useState } from "react";
-import "./Form.css"; // Include the CSS file if needed
-
-const Pizza = ({ onFormSubmit }) => {
-  const [customerInfo, setCustomerInfo] = useState({
-    size: "",
-    sauces: [],
-    toppings: [],
-    substitute: "",
-    special_instructions: "",
-  });
-
+const Pizza = ({ customerInfo, setPizzaDetails }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCustomerInfo((prevInfo) => ({
-      ...prevInfo,
+    setPizzaDetails((prevDetails) => ({
+      ...prevDetails,
       [name]: value,
     }));
   };
@@ -26,15 +15,10 @@ const Pizza = ({ onFormSubmit }) => {
       ? customerInfo[type].filter((item) => item !== value)
       : [...customerInfo[type], value];
 
-    setCustomerInfo((prevInfo) => ({
-      ...prevInfo,
+    setPizzaDetails((prevDetails) => ({
+      ...prevDetails,
       [type]: updatedItems,
     }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onFormSubmit(customerInfo);
   };
 
   const toppingNames = [
@@ -55,7 +39,7 @@ const Pizza = ({ onFormSubmit }) => {
   ];
 
   return (
-    <form id="pizza-form" onSubmit={handleSubmit}>
+    <div>
       <label>
         Size:
         <select
@@ -71,28 +55,40 @@ const Pizza = ({ onFormSubmit }) => {
       </label>
 
       <label>
-        Sauces:
-        <div>
-          {["tomato", "pesto", "alfredo", "bbq"].map((sauce, index) => (
-            <label key={index}>
-              <input
-                type="checkbox"
-                name={`sauce${index}`}
-                value={sauce}
-                checked={customerInfo.sauces.includes(sauce)}
-                onChange={(e) => handleCheckboxChange(e, "sauces")}
-              />
-              {`${sauce.charAt(0).toUpperCase() + sauce.slice(1)} Sauce`}
-            </label>
-          ))}
-        </div>
-      </label>
+  Sauces:
+  <table className="sauces-table">
+    <tbody>
+      {["tomato", "pesto", "alfredo", "bbq"].map((sauce, index) => (
+        <tr key={index}>
+          <td>
+            <input
+              type="checkbox"
+              name={`sauce${index}`}
+              value={sauce}
+              checked={customerInfo.sauces.includes(sauce)}
+              onChange={(e) => handleCheckboxChange(e, "sauces")}
+            />
+          </td>
+          <td>{`${sauce.charAt(0).toUpperCase() + sauce.slice(1)} Sauce`}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</label>
 
-      <label>
-        Toppings:
-        <div>
-          {toppingNames.map((topping, index) => (
-            <label key={index}>
+<label>
+  Toppings:
+  <table className="toppings-table">
+    <thead>
+      <tr>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {toppingNames.map((topping, index) => (
+        <tr key={index}>
+          <td>
+            <label>
               <input
                 type="checkbox"
                 name={`topping${index}`}
@@ -102,9 +98,12 @@ const Pizza = ({ onFormSubmit }) => {
               />
               {topping}
             </label>
-          ))}
-        </div>
-      </label>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</label>
 
       <label>
         Substitute:
@@ -124,9 +123,7 @@ const Pizza = ({ onFormSubmit }) => {
           onChange={handleInputChange}
         />
       </label>
-
-      
-    </form>
+    </div>
   );
 };
 
