@@ -14,42 +14,38 @@ const PizzaForm = ({ onFormSubmit }) => {
     substitute: "",
     special_instructions: "",
   });
-
   const handleNameChange = (e) => {
     const newName = e.target.value;
     setCustomerName(newName);
     setError("");
   };
 
-  const handlePizzaDetailsChange = (e) => {
-    const { name, value } = e.target;
-    setPizzaDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
-  };
-
+ 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (customerName.length < 2 || customerName.trim().length === 0) {
       setError("İsim en az 2 karakter olmalıdır");
     } else {
       try {
         setLoading(true);
-
+  
         const response = await axios.post("https://reqres.in/api/orders", {
           customerName,
           pizzaDetails,
         });
-
+  
         console.log("Veritabanına gönderilen sipariş:", response.data);
-
+  
         // Pizza.js'ye bilgileri iletiliyor
         onFormSubmit({
           customerName,
           pizzaDetails,
         });
+  
+        // Redirect to ConfirmationPage with relevant data
+        const confirmationUrl = `/confirmation?size=${pizzaDetails.size}&name=${customerName}&souces=${pizzaDetails.sauces.join(",")}&toppings=${pizzaDetails.toppings.join(",")}&substitute=${pizzaDetails.substitute}&special_instructions=${pizzaDetails.special_instructions}`;
+        window.location.href = confirmationUrl;
       } catch (error) {
         console.error("Sipariş gönderme hatası:", error);
       } finally {
