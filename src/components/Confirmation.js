@@ -1,27 +1,29 @@
 import React from "react";
-import pizzaImage from './../assets/img/Pizza.jpg';
-const ConfirmationPage=(props)=>{
-    const urlParams=new URLSearchParams(window.location.search)
-    const mySizeParam=urlParams.get('size');
-    const myNameParam=urlParams.get('name');
-    console.log(mySizeParam);
 
-return (
-    <div>
-        <img src={pizzaImage} alt='Mükemmel pizza' width={400}/>
-         <h2>Sipariş Onayı</h2>
-        
-        <ul>
-            <li> CustomerName:{myNameParam} </li>
-            <li> size:{ mySizeParam} </li>
-            <li> souces:{props.souces} </li>
-            <li> toppings:{props.toppings} </li>
-            <li> substitute:{props.substitute} </li>
-            <li> special_instructions:{props.special_instructions} </li>
+
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+
+const ConfirmationPage = (props) => {
+    let params = useParams();
+
+
+    return (
+        <div>
+
+            <h2>Sipariş Onayı</h2>
+
+            <ul>
+                <li> Customer Name: {props.customerName} </li>
+                <li> Size: {params.size} </li>
+                <li> Souces: {props.souce} </li>
+                <li> Toppings: {props.toppings} </li>
+                <li> Substitute: {props.substitute} </li>
+                <li> Special Instructions: {props.specialInstructions} </li>
             </ul>
-            <p> siparişiniz başarı ile teslim edilmiştir</p>
 
+            <p> Siparişiniz başarı ile teslim edilmiştir </p>
         </div>
-)
+    );
 }
+
 export default ConfirmationPage;
